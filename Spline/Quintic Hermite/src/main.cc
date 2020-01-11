@@ -39,8 +39,9 @@ int main()
     double* x = new double[100];
     double* y = new double[100];
     double* theta = new double[100];
+	double* curv = new double[100];
 
-    HermitePath(0,0,0,5,5,0,0,0,false,0,0,0,0,0.0,1.0,100,x,y,theta);
+    HermitePath(0,0,0,5,5,0,0,0,false,0,0,0,0,0.0,1.0,100,x,y,theta, curv);
 
     std::cout << "x,y,theta" << std::endl;
     for(auto i=0;i<100;i++) {

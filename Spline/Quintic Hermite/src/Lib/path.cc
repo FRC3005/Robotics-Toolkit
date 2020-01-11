@@ -193,7 +193,7 @@ void HermitePath::Populate(double s_min, double s_max, Pose *pose_arr, double *c
       }
 
       if (i > 0) {
-        Eigen::Vector2d tangent = FromMagDirection(1., heading);
+        Eigen::Vector2d tangent = FromMagDirection(1., theta);
         Eigen::Vector2d prev_tangent =
             FromMagDirection(1., pose_arr[i - 1].heading());
 
@@ -204,7 +204,7 @@ void HermitePath::Populate(double s_min, double s_max, Pose *pose_arr, double *c
         curvature =
             (dT / ds).norm() * (backwards_ ? -1. : 1.) *
             std::copysign(
-                1., heading -
+                1., theta -
                         pose_arr[i - 1].heading());  // signed curvature (k)
       } else {
         curvature = 0.;
