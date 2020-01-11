@@ -10,7 +10,7 @@ __declspec(dllexport) void __stdcall HermitePath(double initial_x, double initia
             double extra_distance_initial, double extra_distance_final,
             double initial_angular_velocity, double final_angular_velocity,
             double s_min, double s_max, unsigned int array_len,
-            double* path_x, double* path_y, double* path_theta)
+            double* path_x, double* path_y, double* path_theta, double* curvature)
 {
     frc971::Pose Initial(frc971::Position(initial_x, initial_y), initial_theta);
     frc971::Pose Final(frc971::Position(final_x, final_y), final_theta);
@@ -20,13 +20,15 @@ __declspec(dllexport) void __stdcall HermitePath(double initial_x, double initia
                             initial_angular_velocity,final_angular_velocity);
 
     frc971::Pose* Output = new frc971::Pose[array_len];
+	double* curvature_arr = new double[array_len];
 
-    Path.Populate(s_min, s_max, Output, array_len);
+    Path.Populate(s_min, s_max, Output, curvature_arr, array_len);
 
     for(auto i=0;i<array_len;i++) {
         path_x[i] = Output[i].translational()(0);
         path_y[i] = Output[i].translational()(1);
         path_theta[i] = Output[i].heading();
+		curvature[i] = curvature_arr[i];
     }
 
     delete [] Output;

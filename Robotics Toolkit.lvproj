@@ -29,8 +29,6 @@
 				<Item Name="NI_AALPro.lvlib" Type="Library" URL="/&lt;vilib&gt;/Analysis/NI_AALPro.lvlib"/>
 			</Item>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
-			<Item Name="Pure Pursuit.lvlib" Type="Library" URL="../Spline/Pure Pursuit.lvlib"/>
-			<Item Name="Trajectory.ctl" Type="VI" URL="../Spline/Quintic Hermite/Typedef/Trajectory.ctl"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build"/>
 	</Item>

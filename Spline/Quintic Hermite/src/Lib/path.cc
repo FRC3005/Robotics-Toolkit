@@ -162,21 +162,26 @@ HermitePath::HermitePath(Position initial_position, Eigen::Vector2d initial_tang
   initial_heading_ = remainder(::std::atan2(initial_tangent(1), initial_tangent(0)), 2 * M_PI);
 }
 
-void HermitePath::Populate(double s_min, double s_max, Pose *pose_arr, size_t arr_len) const {
+void HermitePath::Populate(double s_min, double s_max, Pose *pose_arr, double *curvature_arr, size_t arr_len) const {
   Eigen::Matrix<double, 6, 1> s_polynomial_bases;
   double step = (s_max - s_min) / (arr_len - 1);
+  
+  Eigen::Vector4d combined;
+
   for (size_t i = 0; i < arr_len; i++) {
     double s = s_min + i * step;
     s_polynomial_bases << 1.0, s, s * s, s * s * s, s * s * s * s, s * s * s * s * s;
 
-    Eigen::Vector4d combined = coefficients_ * s_polynomial_bases;
+    combined = coefficients_ * s_polynomial_bases;
 
     double theta;
+	double curvature;
     if (s == 0) {
       // When s is _exactly_ zero, we can't get the heading directly from
       // the derivative (because it collapses to zero)! Let's use the cached
       // value instead.
       theta = initial_heading_;
+	  curvature = 0;
     } else {
       theta = ::std::atan2(combined(3), combined(2));
       if (backwards_) {
@@ -186,9 +191,28 @@ void HermitePath::Populate(double s_min, double s_max, Pose *pose_arr, size_t ar
           theta += M_PI;
         }
       }
+
+      if (i > 0) {
+        Eigen::Vector2d tangent = FromMagDirection(1., heading);
+        Eigen::Vector2d prev_tangent =
+            FromMagDirection(1., pose_arr[i - 1].heading());
+
+        Eigen::Vector2d dT = tangent - prev_tangent;
+        double ds =
+            (combined.block<2, 1>(0, 0) - pose_arr[i - 1].translational())
+                .norm();
+        curvature =
+            (dT / ds).norm() * (backwards_ ? -1. : 1.) *
+            std::copysign(
+                1., heading -
+                        pose_arr[i - 1].heading());  // signed curvature (k)
+      } else {
+        curvature = 0.;
+      }
     }
 
     pose_arr[i] = Pose(combined.block<2, 1>(0, 0), theta);
+	curvature_arr[i] = curvature;
   }
 }
 

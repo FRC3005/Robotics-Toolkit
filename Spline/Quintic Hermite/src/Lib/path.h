@@ -35,9 +35,9 @@ class Pose {
 
 class Path {
  public:
-  // Populate `pose_arr` with values (if it isn't nullptr). `pose_arr` should
+  // Populate `pose_arr` with values (if it isn't nullptr). `pose_arr` and `curvature_arr` should
   // have `num_samples` entries.
-  virtual void Populate(double s_min, double s_max, Pose *pose_arr,
+  virtual void Populate(double s_min, double s_max, Pose *pose_arr, double *curvature_arr,
                         size_t arr_len) const = 0;
 };
 
@@ -53,7 +53,7 @@ class HermitePath : public Path {
               double extra_distance_initial, double extra_distance_final,
               double initial_angular_velocity, double final_angular_velocity);
 
-  virtual void Populate(double s_min, double s_max, Pose *pose_arr,
+  virtual void Populate(double s_min, double s_max, Pose *pose_arr, double *curvature_arr,
                         size_t arr_len) const override;
 
  private:
