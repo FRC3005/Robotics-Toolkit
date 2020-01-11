@@ -1,0 +1,13 @@
+Must be built for x86 32-bit
+
+Install Visual Studio 2017 Community
+
+Run
+
+In command promt go to this directory
+
+Run the following in command prompt to setup the build environment:
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsamd64_x86.bat
+
+Run the following command to build:
+cl /EHsc /Zi /FS /Zc:inline /MP4 /MD /LD /ILib main.cc Lib/path.cc
