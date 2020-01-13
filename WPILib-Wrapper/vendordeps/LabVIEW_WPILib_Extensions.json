@@ -1,0 +1,29 @@
+{
+    "fileName": "LabVIEW_WPILib_Extensions.json",
+    "name": "LabVIEW_WPILib_Extensions",
+    "version": "0.0.1",
+    "uuid": "aaa8b4b1-d113-44ac-a1ef-485c1347052a",
+    "mavenUrls": [
+        "http://www.labview.com/content/sw/color-sensor-v3/sdk/maven/"
+    ],
+    "jsonUrl": "http://www.labview.com/content/sw/color-sensor-v3/sdk/LabVIEW_WPILib_Extensions.json",
+    "cppDependencies": [
+        {
+            "groupId": "com.labview.frc",
+            "artifactId": "ColorSensorV3-cpp",
+            "version": "0.0.1",
+            "libName": "ColorSensorV3",
+            "headerClassifier": "headers",
+            "sourcesClassifier": "source",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "windowsx86",
+                "linuxx86-64",
+                "linuxathena",
+                "linuxraspbian"
+            ]
+        }
+    ]
+}
