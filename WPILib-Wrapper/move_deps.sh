@@ -7,6 +7,7 @@ MOVE_DIR=C:/Users/Public/wpilib/$BUILD_YEAR/maven/com/labview/frc
 VENDOR_DIR=C:/Users/Public/wpilib/$BUILD_YEAR/vendordeps
 
 echo "*** Moving maven directories ***"
+mkdir -p "$RELEASE_DIR/LabVIEW_WPILib_Extensions-cpp"
 cp -r $RELEASE_DIR/LabVIEW_WPILib_Extensions-cpp $MOVE_DIR
 
 echo "*** Moving vendor deps ***"

@@ -1,0 +1,3 @@
+LV_CreateDifferentialDriveTrajectory
+LV_GetTrajectoryStates
+LV_FreeTrajectory

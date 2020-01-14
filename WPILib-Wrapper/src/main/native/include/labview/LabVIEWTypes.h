@@ -28,4 +28,59 @@
 
 #pragma once
 
-#include "labview/LVTrajectory.h"
+extern "C" {
+    
+// Note: This is dependant on __attribute__((PACKED)) and processor is
+// little-endian
+// Packing it required for LabVIEW structs see here 
+// https://knowledge.ni.com/KnowledgeArticleDetails?id=kA00Z0000019YsYSAU&l=en-US
+
+#define __USE_LABVIEW_CINTOOLS
+#ifdef __USE_LABVIEW_CINTOOLS
+
+#include "platdefines.h"
+#include "lv_prolog.h"
+
+#define PACKED
+
+#else
+#ifdef _WIN32
+#define PACKED
+#pragma pack(push, 1)
+#else
+#define PACKED __attribute__((__packed__))
+#endif
+#endif
+
+typedef struct PACKED {
+    double x;
+    double y;
+    double theta;
+} lv_pose2d;
+
+typedef struct PACKED { 
+    // The time elapsed since the beginning of the trajectory. 
+    double t;
+    // The speed at that point of the trajectory.
+    double velocity;
+    // The acceleration at that point of the trajectory.
+    double acceleration;
+    // The pose at that point of the trajectory.
+    lv_pose2d pose;
+    // The curvature at that point of the trajectory.
+    double curvature;
+} lv_trajectory_state;
+
+#ifdef __USE_LABVIEW_CINTOOLS
+
+#include "lv_epilog.h"
+
+#else
+#ifdef _WIN32
+#pragma pack(pop)
+#endif
+#endif
+
+#undef PACKED
+
+}

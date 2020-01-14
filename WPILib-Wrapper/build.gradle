@@ -25,15 +25,11 @@ apply from: 'config.gradle'
 apply from: 'dependencies.gradle'
 
 nativeUtils {
-  exportsConfigs {
-      LabVIEW_WPILib_Extensions {
-      }
+  privateExportsConfigs {
+    LabVIEW_WPILib_Extensions {
+      exportsFile = project.file("src/main/native/symbols.txt")
+    }
   }
-  //privateExportsConfigs {
-  //  SparkMaxDriver {
-  //    exportsFile = project.file("src/main/driver/symbols.txt")
-  //  }
-  //}
 }
 
 model {
@@ -44,14 +40,32 @@ model {
           source {
             srcDirs 'src/main/native/cpp'
             include '**/*.cpp'
+            include '**/**/*.cpp'
+            include '**/**/**/*.cpp'
           }
           exportedHeaders {
             srcDirs 'src/main/native/include'
+            srcDirs 'C:\\Program Files (x86)\\National Instruments\\LabVIEW 2019\\cintools'
           }
         }
       }
 
-      nativeUtils.useRequiredLibrary(it, "wpilibc_static", "wpiutil_static")
+      nativeUtils.useRequiredLibrary(it, "wpiutil_static")
+    }
+  }
+
+  
+  testSuites {
+    WPILibWrapperTest(GoogleTestTestSuiteSpec) {
+      testing $.components.LabVIEW_WPILib_Extensions
+      sources.cpp {
+        source {
+          srcDir 'src/test/cpp'
+          include '**/*.cpp'
+        }
+      }
+
+      nativeUtils.useRequiredLibrary(it, "wpiutil_static", "googletest_static")
     }
   }
 

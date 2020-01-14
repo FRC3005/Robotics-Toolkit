@@ -28,16 +28,31 @@
 
 #pragma once
 
+#include "labview/LabVIEWTypes.h"
+
+#include <stdint.h>
+#include <stddef.h>
+
 extern "C" {
 
-void LV_CreateDifferentialDriveTrajectory(
-    double ks_volts,
-    double kv_voltSecondPerUnit,
-    double ka_voltsSecondPerUnitSqrd,
-    double maxVoltage,
-    double trackwidth,
-    double maxVelocity,
-    double maxAccel
-);
+typedef struct lv_trajectory* lv_trajectory_handle;
+
+lv_trajectory_handle LV_CreateDifferentialDriveTrajectory(
+                    double ks_volts,
+                    double kv_voltSecondPerUnit,
+                    double ka_voltsSecondPerUnitSqrd,
+                    double maxVoltage,
+                    double trackwidth,
+                    double maxVelocity,
+                    double maxAccel,
+                    double* waypoints_x,
+                    double* waypoints_y,
+                    double* waypoints_theta,
+                    size_t numPoints,
+                    double* totalTimeSeconds,
+                    size_t* trajectorySize );
+
+void LV_GetTrajectoryStates(lv_trajectory_handle lvTrajectory, lv_trajectory_state* states, size_t bufsize);
+void LV_FreeTrajectory(lv_trajectory_handle lvTrajectory);
 
 }
