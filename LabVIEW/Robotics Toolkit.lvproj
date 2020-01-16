@@ -24,6 +24,7 @@
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
 		<Item Name="Testing.vi" Type="VI" URL="../Testing.vi"/>
+		<Item Name="Trajectory State.ctl" Type="VI" URL="../Trajectory/Typedef/Trajectory State.ctl"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="NI_AALPro.lvlib" Type="Library" URL="/&lt;vilib&gt;/Analysis/NI_AALPro.lvlib"/>
