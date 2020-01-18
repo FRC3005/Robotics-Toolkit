@@ -23,14 +23,18 @@
 		<Item Name="Spline" Type="Folder" URL="../Spline">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
+		<Item Name="Trajectory" Type="Folder" URL="../Trajectory">
+			<Property Name="NI.DISK" Type="Bool">true</Property>
+		</Item>
 		<Item Name="Testing.vi" Type="VI" URL="../Testing.vi"/>
-		<Item Name="Trajectory State.ctl" Type="VI" URL="../Trajectory/Typedef/Trajectory State.ctl"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
+				<Item Name="NI_AALBase.lvlib" Type="Library" URL="/&lt;vilib&gt;/Analysis/NI_AALBase.lvlib"/>
 				<Item Name="NI_AALPro.lvlib" Type="Library" URL="/&lt;vilib&gt;/Analysis/NI_AALPro.lvlib"/>
+				<Item Name="NI_Matrix.lvlib" Type="Library" URL="/&lt;vilib&gt;/Analysis/Matrix/NI_Matrix.lvlib"/>
 			</Item>
-			<Item Name="LabVIEW_WPILib_Extensions.dll" Type="Document" URL="../WPILib-Wrapper/Library/LabVIEW_WPILib_Extensions.dll"/>
 			<Item Name="lvanlys.dll" Type="Document" URL="/&lt;resource&gt;/lvanlys.dll"/>
+			<Item Name="main.dll" Type="Document" URL="../Spline/Quintic Hermite/main.dll"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build"/>
 	</Item>
