@@ -164,7 +164,7 @@ bin/
 /release/
 
 ## LabVIEW
-/*.lvlps
-/*.aliases
+*.lvlps
+*.aliases
 /Builds
 /builds
