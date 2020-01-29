@@ -1,7 +1,4 @@
 [ProjectWindow_Data]
-<<<<<<< HEAD
-ProjectExplorer.ClassicPosition[String] = "411,1446,808,1818"
-=======
 ProjectExplorer.ClassicPosition[String] = "245,1300,642,1672"
 
 [AB_Cache_{2BEDABF7-0DC3-4AEE-8623-C2A63298D9ED}]
@@ -27,5 +24,4 @@ Cache_Path[Path] Line0002 = "84-5CDE-41F0-A545-05C340FAD8B5}.txt"
 [AB_Cache_{71EDFCF6-A0F6-4FC1-9515-477FE0A58C8F}]
 Cache_Path[Path] Line0001 = "/C/Users/wtoth/AppData/Local/Temp/AB_Cache_{71EDFC"
 Cache_Path[Path] Line0002 = "F6-A0F6-4FC1-9515-477FE0A58C8F}.txt"
->>>>>>> b3aab5f291d46c6147a72c04b96a6b23ebfd334c
 
