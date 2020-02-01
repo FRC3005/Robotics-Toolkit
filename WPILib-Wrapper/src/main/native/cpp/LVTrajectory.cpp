@@ -13,6 +13,69 @@ struct lv_trajectory {
     frc::Trajectory value;
 };
 
+
+lv_trajectory_handle LV_CreateDifferentialDriveTrajectory2(
+                    double ks_volts,
+                    double kv_voltSecondPerUnit,
+                    double ka_voltsSecondPerUnitSqrd,
+                    double maxVoltage,
+                    double trackwidth,
+                    double maxVelocity,
+                    double maxAccel,
+                    double* position_vector_x,
+                    double* position_vector_y,
+                    double* velocity_vector_x,
+                    double* velocity_vector_y,
+                    double* acceleration_vector_x,
+                    double* acceleration_vector_y,
+                    size_t numPoints,
+                    double* totalTimeSeconds,
+                    size_t* trajectorySize ) {
+    // TODO: If there are performance implications, create a class 
+    // that can be initialized and passed around by LabVIEW with the below
+    auto ks = units::volt_t(ks_volts);
+    auto kv = kv_voltSecondPerUnit * 1_V * 1_s / 1_m;;
+    auto ka = ka_voltsSecondPerUnitSqrd * 1_V * 1_s * 1_s / 1_m;
+    auto voltageMax = units::volt_t(maxVoltage);
+    auto trackwidthUnits = units::meter_t(trackwidth);
+    auto maxVelocityUnits = units::meters_per_second_t(maxVelocity);
+    auto maxAccelUnits = units::meters_per_second_squared_t(maxAccel);
+    frc::DifferentialDriveKinematics DriveKinematics(trackwidthUnits);
+    std::vector<frc::Spline<5>::ControlVector> controlVectors;
+    controlVectors.reserve(numPoints);
+
+    for ( int i = 0; i < (int)numPoints; i++ ) {
+        frc::Spline<5>::ControlVector cv;
+        cv.x[0] = position_vector_x[i];
+        cv.x[1] = velocity_vector_x[i];
+        cv.x[2] = acceleration_vector_x[i];
+        cv.y[0] = position_vector_y[i];
+        cv.y[1] = velocity_vector_y[i];
+        cv.y[2] = acceleration_vector_y[i];
+        controlVectors.push_back(cv);
+    }
+
+    // Create a voltage constraint to ensure we don't accelerate too fast
+    frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
+        frc::SimpleMotorFeedforward<units::meters>(ks, kv, ka),
+        DriveKinematics, voltageMax);
+
+    // Set up config for trajectory
+    frc::TrajectoryConfig config(maxVelocityUnits, maxAccelUnits);
+    // Add kinematics to ensure max speed is actually obeyed
+    config.SetKinematics(DriveKinematics);
+    // Apply the voltage constraint
+    config.AddConstraint(autoVoltageConstraint);
+
+    // An example trajectory to follow.  All units in meters.
+    struct lv_trajectory* trajectory = new struct lv_trajectory;
+    trajectory->value = frc::TrajectoryGenerator::GenerateTrajectory(controlVectors, config);
+    *totalTimeSeconds = units::unit_cast<double>(trajectory->value.TotalTime());
+    *trajectorySize = trajectory->value.States().size();
+
+    return static_cast<lv_trajectory_handle>(trajectory);
+}
+
 lv_trajectory_handle LV_CreateDifferentialDriveTrajectory(
                     double ks_volts,
                     double kv_voltSecondPerUnit,

@@ -52,6 +52,24 @@ lv_trajectory_handle LV_CreateDifferentialDriveTrajectory(
                     double* totalTimeSeconds,
                     size_t* trajectorySize );
 
+lv_trajectory_handle LV_CreateDifferentialDriveTrajectory2(
+                    double ks_volts,
+                    double kv_voltSecondPerUnit,
+                    double ka_voltsSecondPerUnitSqrd,
+                    double maxVoltage,
+                    double trackwidth,
+                    double maxVelocity,
+                    double maxAccel,
+                    double* position_vector_x,
+                    double* position_vector_y,
+                    double* velocity_vector_x,
+                    double* velocity_vector_y,
+                    double* acceleration_vector_x,
+                    double* acceleration_vector_y,
+                    size_t numPoints,
+                    double* totalTimeSeconds,
+                    size_t* trajectorySize );
+
 void LV_GetTrajectoryStates(lv_trajectory_handle lvTrajectory, lv_trajectory_state* states, size_t bufsize);
 void LV_FreeTrajectory(lv_trajectory_handle lvTrajectory);
 
