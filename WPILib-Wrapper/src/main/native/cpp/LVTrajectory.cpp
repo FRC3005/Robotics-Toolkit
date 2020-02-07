@@ -89,7 +89,8 @@ lv_trajectory_handle LV_CreateDifferentialDriveTrajectory(
                     double* waypoints_theta,
                     size_t numPoints,
                     double* totalTimeSeconds,
-                    size_t* trajectorySize ) {
+                    size_t* trajectorySize,
+                    uint8_t reverse ) {
     // TODO: If there are performance implications, create a class 
     // that can be initialized and passed around by LabVIEW with the below
     auto ks = units::volt_t(ks_volts);
@@ -120,6 +121,8 @@ lv_trajectory_handle LV_CreateDifferentialDriveTrajectory(
     config.SetKinematics(DriveKinematics);
     // Apply the voltage constraint
     config.AddConstraint(autoVoltageConstraint);
+
+    config.SetReversed(reverse ? true : false);
 
     // An example trajectory to follow.  All units in meters.
     struct lv_trajectory* trajectory = new struct lv_trajectory;

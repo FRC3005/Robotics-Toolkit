@@ -50,7 +50,8 @@ lv_trajectory_handle LV_CreateDifferentialDriveTrajectory(
                     double* waypoints_theta,
                     size_t numPoints,
                     double* totalTimeSeconds,
-                    size_t* trajectorySize );
+                    size_t* trajectorySize,
+                    uint8_t reverse);
 
 lv_trajectory_handle LV_CreateDifferentialDriveTrajectory2(
                     double ks_volts,
